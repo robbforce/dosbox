@@ -70,6 +70,13 @@ MidiHandler Midi_none;
 
 /* Include different midi drivers, lowest ones get checked first for default */
 
+#ifdef C_FLUIDSYNTH
+#include "midi_fluidsynth.h"
+#endif
+
+#include "midi_mt32.h"
+static MidiHandler_mt32 &Midi_mt32 = MidiHandler_mt32::GetInstance();
+
 #if defined(MACOSX)
 
 #include "midi_coremidi.h"

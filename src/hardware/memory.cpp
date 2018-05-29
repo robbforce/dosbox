@@ -24,11 +24,13 @@
 #include "paging.h"
 #include "regs.h"
 
+#include "voodoo.h"
+
 #include <string.h>
 
 #define PAGES_IN_BLOCK	((1024*1024)/MEM_PAGE_SIZE)
 #define SAFE_MEMORY	32
-#define MAX_MEMORY	64
+#define MAX_MEMORY	384
 #define MAX_PAGE_ENTRIES (MAX_MEMORY*1024*1024/4096)
 #define LFB_PAGES	512
 #define MAX_LINKS	((MAX_MEMORY*1024/4)+4096)		//Hopefully enough
@@ -140,6 +142,8 @@ PageHandler * MEM_GetPageHandler(Bitu phys_page) {
 	} else if ((phys_page>=memory.lfb.start_page+0x01000000/4096) &&
 				(phys_page<memory.lfb.start_page+0x01000000/4096+16)) {
 		return memory.lfb.mmiohandler;
+	} else if (VOODOO_PCI_CheckLFBPage(phys_page)) {
+		return VOODOO_GetPageHandler();
 	}
 	return &illegal_page_handler;
 }
