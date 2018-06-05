@@ -833,7 +833,7 @@ char ssSetSize(Bitu width,Bitu height,Bitu flags,double scalex,double scaley, Bi
 
 
 char ssStartUpdate( Bit8u **pixels, Bitu *pitch )
-{	sdl.SurfaceInfo.StartUpdate( pixels, pitch );  }
+{ return sdl.SurfaceInfo.StartUpdate( pixels, pitch ); }
 
 void ssEndUpdate( const Bit16u *changedLines )
 {	GetChangedLines( changedLines );
