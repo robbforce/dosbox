@@ -1,6 +1,6 @@
-/* GIMP RGB C-Source image dump 1-byte-run-length-encoded (t.c) */
+/* GIMP RGB C-Source image dump 1-byte-run-length-encoded (dosbox_splash.c) */
 
-#define GIMP_IMAGE_RUN_LENGTH_DECODE(image_buf, rle_data, size, bpp) do \
+#define DOSBOX_SPLASH_RUN_LENGTH_DECODE(image_buf, rle_data, size, bpp) do \
 { unsigned int __bpp; unsigned char *__ip; const unsigned char *__il, *__rd; \
   __bpp = (bpp); __ip = (image_buf); __il = __ip + (size) * __bpp; \
   __rd = (rle_data); if (__bpp > 3) { /* RGBA */ \
@@ -19,9 +19,9 @@
 static const struct {
   unsigned int 	 width;
   unsigned int 	 height;
-  unsigned int 	 bytes_per_pixel; /* 3:RGB, 4:RGBA */ 
+  unsigned int 	 bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */ 
   unsigned char	 rle_pixel_data[24875 + 1];
-} gimp_image = {
+} dosbox_splash = {
   640, 400, 3,
   "\377\272=\0\377\272=\0\377\272=\0\377\272=\0\377\272=\0\377\272=\0\377\272"
   "=\0\377\272=\0\377\272=\0\377\272=\0\377\272=\0\377\272=\0\377\272=\0\377"

@@ -256,16 +256,15 @@ static Bitu MakeAspectTable(Bitu skip,Bitu height,double scaley,Bitu miny) {
 	return linesadded;
 }
 
-
 static void RENDER_Reset( void ) {
 	Bitu width=render.src.width;
 	Bitu height=render.src.height;
 	bool dblw=render.src.dblw;
 	bool dblh=render.src.dblh;
-
 	double gfx_scalew;
 	double gfx_scaleh;
 	
+	//LOG_MSG("RENDER_Reset(): width=%i, height=%i, dblw=%d, dblh=%d", width, height, dblw, dblh);
 	Bitu gfx_flags, xscale, yscale;
 	ScalerSimpleBlock_t		*simpleBlock = &ScaleNormal1x;
 	ScalerComplexBlock_t	*complexBlock = 0;
@@ -287,6 +286,12 @@ static void RENDER_Reset( void ) {
 			simpleBlock = &ScaleNormal2x;
 		else if (render.scale.size == 3)
 			simpleBlock = &ScaleNormal3x;
+		else if (render.scale.size == 4)
+			simpleBlock = &ScaleNormal4x;
+		else if (render.scale.size == 5)
+			simpleBlock = &ScaleNormal5x;
+		else if (render.scale.size == 6)
+			simpleBlock = &ScaleNormal6x;
 		else
 			simpleBlock = &ScaleNormal1x;
 		/* Maybe override them */
@@ -347,8 +352,18 @@ static void RENDER_Reset( void ) {
 		}
 #endif
 	} else if (dblw) {
+		if ((render.scale.size == 2) && (render.scale.forced))
+			simpleBlock = &ScaleNormalDw2x;
+		else if ((render.scale.size == 3) && (render.scale.forced))
+			simpleBlock = &ScaleNormalDw3x;
+		else
 		simpleBlock = &ScaleNormalDw;
 	} else if (dblh) {
+		if ((render.scale.size == 2) && (render.scale.forced))
+			simpleBlock = &ScaleNormalDh2x;
+		else if ((render.scale.size == 3) && (render.scale.forced))
+			simpleBlock = &ScaleNormalDh3x;
+		else
 		simpleBlock = &ScaleNormalDh;
 	} else  {
 forcenormal:
@@ -398,28 +413,55 @@ forcenormal:
 			gfx_flags = (gfx_flags & ~GFX_CAN_8) | GFX_RGBONLY;
 			break;
 	}
-	gfx_flags=GFX_GetBestMode(gfx_flags);
+
+	double par = 1.0; // the pixel aspect ratio of the source pixel array
+	gfx_flags=GFX_GetBestMode(gfx_flags); 
+	if( gfx_flags & GFX_UNITY_SCALE )  // Ant_222 simply setting GFX_SCALING doesn't work
+	// Ant_222: bad idea to set UNITY_SCALE here, because later, in SetSize(),
+	//          we may have to revert to the simple surface mode, but it will be late.
+	{	if( render.aspect )
+		{	par = render.src.ratio;  }
+
+		gfx_scalew = 1.0; gfx_scaleh = 1.0;
+		// Ant_222: all this is required simply to undo the dblw or dblh upscaling above
+		complexBlock = 0;  // HACK: Ant_222: copy-pasted from under the forcenormal label
+		simpleBlock = &ScaleNormal1x;
+		xscale = 1.0;
+		yscale = 1.0;
+		if( !( dblw && dblh ) )
+		{	if( dblw )
+			{	par /= 2;
+				gfx_flags |= GFX_DBL_W;
+			}
+			if( dblh )
+			{	par *= 2;
+				gfx_flags |= GFX_DBL_H;
+			}
+		}
+	}
 	if (!gfx_flags) {
 		if (!complexBlock && simpleBlock == &ScaleNormal1x) 
 			E_Exit("Failed to create a rendering output");
 		else 
 			goto forcenormal;
 	}
+	
 	width *= xscale;
 	Bitu skip = complexBlock ? 1 : 0;
-	if (gfx_flags & GFX_SCALING) {
+	if ( gfx_flags & GFX_SCALING ) {
 		height = MakeAspectTable(skip, render.src.height, yscale, yscale );
 	} else {
 		if ((gfx_flags & GFX_CAN_RANDOM) && gfx_scaleh > 1) {
 			gfx_scaleh *= yscale;
-			height = MakeAspectTable( skip, render.src.height, gfx_scaleh, yscale );
+			height = MakeAspectTable( skip, render.src.height, gfx_scaleh, yscale ); 
 		} else {
 			gfx_flags &= ~GFX_CAN_RANDOM;		//Hardware surface when possible
 			height = MakeAspectTable( skip, render.src.height, yscale, yscale);
 		}
 	}
 /* Setup the scaler variables */
-	gfx_flags=GFX_SetSize(width,height,gfx_flags,gfx_scalew,gfx_scaleh,&RENDER_CallBack);
+
+	gfx_flags=GFX_SetSize(width,height,gfx_flags,gfx_scalew,gfx_scaleh,&RENDER_CallBack, par );
 	if (gfx_flags & GFX_CAN_8)
 		render.scale.outMode = scalerMode8;
 	else if (gfx_flags & GFX_CAN_15)
@@ -449,7 +491,7 @@ forcenormal:
 			render.scale.complexHandler = complexBlock->Random[ render.scale.outMode ];
 		} else
 #endif
-		{
+		{	
 			render.scale.complexHandler = 0;
 			lineBlock = &simpleBlock->Random;
 		}
@@ -514,6 +556,7 @@ static void RENDER_CallBack( GFX_CallBackFunctions_t function ) {
 }
 
 void RENDER_SetSize(Bitu width,Bitu height,Bitu bpp,float fps,double ratio,bool dblw,bool dblh) {
+	//LOG_MSG("RENDER_SetSize: %ix%i", width, height);
 	RENDER_Halt( );
 	if (!width || !height || width > SCALER_MAXWIDTH || height > SCALER_MAXHEIGHT) { 
 		return;	
@@ -596,6 +639,9 @@ void RENDER_Init(Section * sec) {
 	if (scaler == "none") { render.scale.op = scalerOpNormal;render.scale.size = 1; }
 	else if (scaler == "normal2x") { render.scale.op = scalerOpNormal;render.scale.size = 2; }
 	else if (scaler == "normal3x") { render.scale.op = scalerOpNormal;render.scale.size = 3; }
+	else if (scaler == "normal4x") { render.scale.op = scalerOpNormal;render.scale.size = 4; }
+	else if (scaler == "normal5x") { render.scale.op = scalerOpNormal;render.scale.size = 5; }
+	else if (scaler == "normal6x") { render.scale.op = scalerOpNormal;render.scale.size = 6; }	
 #if RENDER_USE_ADVANCED_SCALERS>2
 	else if (scaler == "advmame2x") { render.scale.op = scalerOpAdvMame;render.scale.size = 2; }
 	else if (scaler == "advmame3x") { render.scale.op = scalerOpAdvMame;render.scale.size = 3; }

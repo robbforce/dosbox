@@ -1,5 +1,5 @@
 dnl Init.
-AC_INIT(dosbox,SVN)
+AC_INIT(dosbox,ECE)
 AC_PREREQ(2.50)
 AC_CONFIG_SRCDIR(README)
 
@@ -423,6 +423,24 @@ if test x$have_x11_lib = xyes -a x$have_x11_h = xyes ; then
    AC_MSG_RESULT(yes)
 else
    AC_MSG_RESULT(no)
+fi
+
+AH_TEMPLATE(C_FLUIDSYNTH,[Define to 1 to enable fluidsynth MIDI synthesis])
+AC_CHECK_LIB(fluidsynth, new_fluid_synth, have_fluidsynth_lib=yes, have_fluidsynth_lib=no, )
+AC_CHECK_HEADER(fluidsynth.h, have_fluidsynth_h=yes, have_fluidsynth_h=no, )
+AC_MSG_CHECKING(for FluidSynth support)
+if test x$have_fluidsynth_lib = xyes -a x$have_fluidsynth_h = xyes ; then
+  AC_DEFINE(C_FLUIDSYNTH,1)
+  LIBS="$LIBS -lfluidsynth"
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_WARN([fluidsynth MIDI synthesis not available])
+fi
+
+AH_TEMPLATE(C_WORDEXP,[Define to 1 if you have wordexp.h])
+AC_CHECK_HEADER(wordexp.h, have_wordexp_h=yes, have_wordexp_h=no, )
+if test x$have_wordexp_h = xyes ; then
+  AC_DEFINE(C_WORDEXP,1)
 fi
 
 AH_TEMPLATE(C_OPENGL,[Define to 1 to use opengl display output support])
