@@ -12,6 +12,9 @@
 /* Define to 1 to use opengl display output support */
 #define C_OPENGL 1
 
+/* Define to 1 to add fluidsynth support */
+#define C_FLUIDSYNTH 1
+
 /* Define to 1 to enable internal modem support, requires SDL_net */
 #define C_MODEM 1
 
