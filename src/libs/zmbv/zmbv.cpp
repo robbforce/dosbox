@@ -22,6 +22,7 @@
 #include <string.h>
 #include <math.h>
 
+#include "dosbox.h"
 #include "zmbv.h"
 
 #define DBZV_VERSION_HIGH 0
@@ -346,6 +347,9 @@ int VideoCodec::FinishCompressFrame( void ) {
 		case ZMBV_FORMAT_32BPP:
 			AddXorFrame<long>();
 			break;
+    default:
+      LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", format, __LINE__);
+      break;
 		}
 	}
 	/* Create the actual frame with compression */
@@ -467,6 +471,9 @@ bool VideoCodec::DecompressFrame(void * framedata, int size) {
 		case ZMBV_FORMAT_32BPP:
 			UnXorFrame<long>();
 			break;
+    default:
+      LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", format, __LINE__);
+      break;
 		}
 	}
 	return true;
@@ -512,6 +519,9 @@ void VideoCodec::Output_UpsideDown_24(void *output) {
 				*w++ = r[j*4+2];
 			}
 			break;
+    default:
+      LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", format, __LINE__);
+      break;
 		}
 
 		// Maintain 32-bit alignment for scanlines.

@@ -82,6 +82,9 @@ void INT10_SetSinglePaletteRegister(Bit8u reg,Bit8u val) {
 		}
 		IO_Write(VGAREG_ACTL_ADDRESS,32);		//Enable output and protect palette
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", machine, __LINE__);
+    break;
 	}
 }
 
@@ -99,6 +102,9 @@ void INT10_SetOverscanBorderColor(Bit8u val) {
 		IO_Write(VGAREG_ACTL_WRITE_DATA,val);
 		IO_Write(VGAREG_ACTL_ADDRESS,32);		//Enable output and protect palette
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", machine, __LINE__);
+    break;
 	}
 }
 
@@ -127,6 +133,9 @@ void INT10_SetAllPaletteRegisters(PhysPt data) {
 		IO_Write(VGAREG_ACTL_WRITE_DATA,mem_readb(data));
 		IO_Write(VGAREG_ACTL_ADDRESS,32);		//Enable output and protect palette
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", machine, __LINE__);
+    break;
 	}
 }
 
@@ -362,6 +371,9 @@ void INT10_SetBackgroundBorder(Bit8u val) {
 		val+=2;
 		INT10_SetSinglePaletteRegister( 3, val );
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", machine, __LINE__);
+    break;
 	}
 }
 

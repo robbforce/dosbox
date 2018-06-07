@@ -867,6 +867,9 @@ Module::Module( Section* configuration ) : Module_base(configuration) {
 	case OPL_opl3gold:
 		Init( Adlib::MODE_OPL3GOLD );
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", oplmode, __LINE__);
+    break;
 	}
 	//0x388 range
 	WriteHandler[0].Install(0x388,OPL_Write,IO_MB, 4 );

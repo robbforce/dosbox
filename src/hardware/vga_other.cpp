@@ -381,7 +381,8 @@ static void write_cga_color_select(Bitu val) {
 		vga.tandy.border_color = val & 0xf;
 		vga.attr.overscan_color = 0;
 		break;
-	default: //Else unhandled values warning
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", vga.mode, __LINE__);
 		break;
 	}
 }

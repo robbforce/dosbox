@@ -548,7 +548,9 @@ bool CMscdex::StopAudio(Bit8u subUnit) {
 	if (dinfo[subUnit].lastResult) {
 		if (dinfo[subUnit].audioPlay) {
 			TMSF pos;
-			GetCurrentPos(subUnit,pos);
+      if (false == GetCurrentPos(subUnit, pos)) {
+        LOG(LOG_MISC, LOG_WARN)("GetCurrentPos returns false: " __FILE__ ":%d", __LINE__);
+      }
 			dinfo[subUnit].audioStart	= pos.min*60*75+pos.sec*75+pos.fr - 150;
 			dinfo[subUnit].audioPaused  = true;
 		} else {	
@@ -910,7 +912,9 @@ static Bit16u MSCDEX_IOCTL_Input(PhysPt buffer,Bit8u drive_unit) {
 					break;
 		case 0x01 :{/* Get current position */
 					TMSF pos;
-					mscdex->GetCurrentPos(drive_unit,pos);
+          if (false == mscdex->GetCurrentPos(drive_unit, pos)) {
+            MSCDEX_LOG("MSCDEX: GetCurrentPos returns false: " __FILE__ ":%d", __LINE__);
+          }
 					Bit8u addr_mode = mem_readb(buffer+1);
 					if (addr_mode==0) {			// HSG
 						Bit32u frames=MSF_TO_FRAMES(pos.min, pos.sec, pos.fr);
@@ -966,7 +970,9 @@ static Bit16u MSCDEX_IOCTL_Input(PhysPt buffer,Bit8u drive_unit) {
 		case 0x0B :{/* Audio Track Info */
 					Bit8u attr; TMSF start;
 					Bit8u track = mem_readb(buffer+1);
-					mscdex->GetTrackInfo(drive_unit,track,attr,start);		
+          if (false == mscdex->GetTrackInfo(drive_unit, track, attr, start)) {
+            MSCDEX_LOG("MSCDEX: GetTrackInfo returns false: " __FILE__ ":%d", __LINE__);
+          }
 					mem_writeb(buffer+2,start.fr);
 					mem_writeb(buffer+3,start.sec);
 					mem_writeb(buffer+4,start.min);
@@ -976,7 +982,9 @@ static Bit16u MSCDEX_IOCTL_Input(PhysPt buffer,Bit8u drive_unit) {
 		case 0x0C :{/* Get Audio Sub Channel data */
 					Bit8u attr,track,index; 
 					TMSF abs,rel;
-					mscdex->GetSubChannelData(drive_unit,attr,track,index,rel,abs);
+          if (false == mscdex->GetSubChannelData(drive_unit, attr, track, index, rel, abs)) {
+            MSCDEX_LOG("MSCDEX: GetSubChannelData returns false: " __FILE__ ":%d", __LINE__);
+          }
 					mem_writeb(buffer+1,attr);
 					mem_writeb(buffer+2,track);
 					mem_writeb(buffer+3,index);
@@ -991,7 +999,9 @@ static Bit16u MSCDEX_IOCTL_Input(PhysPt buffer,Bit8u drive_unit) {
 				   };
 		case 0x0E :{ /* Get UPC */	
 					Bit8u attr; char upc[8];
-					mscdex->GetUPC(drive_unit,attr,&upc[0]);
+          if (false == mscdex->GetUPC(drive_unit, attr, &upc[0])) {
+            MSCDEX_LOG("MSCDEX: GetUPC returns false: " __FILE__ ":%d", __LINE__);
+          }
 					mem_writeb(buffer+1,attr);
 					for (int i=0; i<7; i++) mem_writeb(buffer+2+i,upc[i]);
 					mem_writeb(buffer+9,0x00);
@@ -1000,7 +1010,9 @@ static Bit16u MSCDEX_IOCTL_Input(PhysPt buffer,Bit8u drive_unit) {
 		case 0x0F :{ /* Get Audio Status */	
 					bool playing,pause;
 					TMSF resStart,resEnd;
-					mscdex->GetAudioStatus(drive_unit,playing,pause,resStart,resEnd);
+          if (false == mscdex->GetAudioStatus(drive_unit, playing, pause, resStart, resEnd)) {
+            MSCDEX_LOG("MSCDEX: GetAudioStatus returns false: " __FILE__ ":%d", __LINE__);
+          }
 					mem_writeb(buffer+1,pause);
 					mem_writeb(buffer+3,resStart.min);
 					mem_writeb(buffer+4,resStart.sec);

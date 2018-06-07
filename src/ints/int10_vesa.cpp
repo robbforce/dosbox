@@ -579,6 +579,9 @@ void INT10_SetupVESA(void) {
 	switch (svgaCard) {
 	case SVGA_S3Trio:
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", svgaCard, __LINE__);
+    break;
 	}
 	/* Prepare the real mode interface */
 	int10.rom.wait_retrace=RealMake(0xc000,int10.rom.used);

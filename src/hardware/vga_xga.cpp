@@ -308,7 +308,7 @@ void XGA_DrawLineVector(Bitu val) {
 						break;
 					case 0x02: /* Src is pixel data from PIX_TRANS register */
 						//srcval = tmpval;
-						//LOG_MSG("XGA: DrawRect: Wants data from PIX_TRANS register");
+						LOG_MSG("XGA: DrawRect: Wants data from PIX_TRANS register");
 						break;
 					case 0x03: /* Src is bitmap data */
 						LOG_MSG("XGA: DrawRect: Wants data from srcdata");
@@ -987,6 +987,9 @@ void XGA_SetDualReg(Bit32u& reg, Bitu val) {
 			reg = (reg&0xffff0000)|(val&0x0000ffff);
 		xga.control1 ^= 0x10;
 		break;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", XGA_COLOR_MODE, __LINE__);
+    break;
 	}
 }
 
@@ -1001,6 +1004,9 @@ Bitu XGA_GetDualReg(Bit32u reg) {
 		xga.control1 ^= 0x10;
 		if (xga.control1 & 0x10) return reg&0x0000ffff;
 		else return reg>>16;
+  default:
+    LOG_MSG("Enumeration value(%u) not handled in switch " __FILE__ ":%d", XGA_COLOR_MODE, __LINE__);
+    break;
 	}
 	return 0;
 }

@@ -55,8 +55,10 @@ public:
 			buf[pos++] = 0;
 			msg++;
 		}
-		write(device,buf,pos);
-	};
+    if (0 > write(device, buf, pos)) {
+      LOG_MSG("OSS: in %s write() returns error: %s", __func__, std::strerror(errno));
+    }
+	}
 	void PlaySysex(Bit8u * sysex,Bitu len) {
 		Bit8u buf[SYSEX_SIZE*4];Bitu pos=0;
 		for (;len>0;len--) {
