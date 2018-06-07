@@ -316,6 +316,13 @@
     <ClInclude Include="..\src\cpu\core_dynrec\decoder_opcodes.h" />
     <ClInclude Include="..\src\cpu\core_dynrec\dyn_fpu.h" />
     <ClInclude Include="..\src\cpu\core_dynrec\operators.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_armv4le-common.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_armv4le-o3.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_armv4le-thumb-iw.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_armv4le-thumb-niw.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_armv4le-thumb.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_armv4le.h" />
+    <ClInclude Include="..\src\cpu\core_dynrec\risc_mipsel32.h" />
     <ClInclude Include="..\src\cpu\core_dynrec\risc_x64.h" />
     <ClInclude Include="..\src\cpu\core_dynrec\risc_x86.h" />
     <ClInclude Include="..\src\cpu\core_dyn_x86\cache.h" />
@@ -374,6 +381,8 @@
     <ClInclude Include="..\src\gui\render_templates_hq2x.h" />
     <ClInclude Include="..\src\gui\render_templates_hq3x.h" />
     <ClInclude Include="..\src\gui\render_templates_sai.h" />
+    <ClInclude Include="..\src\hardware\adlib.h" />
+    <ClInclude Include="..\src\hardware\dbopl.h" />
     <ClInclude Include="..\src\hardware\font-switch.h" />
     <ClInclude Include="..\src\hardware\mame\fmopl.h" />
     <ClInclude Include="..\src\hardware\mame\saa1099.h" />
@@ -398,6 +407,7 @@
     <ClInclude Include="..\src\hardware\voodoo_vogl.h" />
     <ClInclude Include="..\src\ints\int10.h" />
     <ClInclude Include="..\src\ints\xms.h" />
+    <ClInclude Include="..\src\libs\gui_tk\gui_tk.h" />
     <ClInclude Include="..\src\platform\visualc\config.h" />
     <ClInclude Include="..\src\platform\visualc\unistd.h" />
   </ItemGroup>
