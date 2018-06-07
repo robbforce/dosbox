@@ -125,7 +125,7 @@ ECBClass::ECBClass(Bit16u segment, Bit16u offset) {
 	mysocket = getSocket();
 }
 void ECBClass::writeDataBuffer(Bit8u* buffer, Bit16u length) {
-	if(databuffer!=0) delete [] databuffer;
+  delete[] databuffer;
 	databuffer = new Bit8u[length];
 	memcpy(databuffer,buffer,length);
 	buflen=length;
@@ -256,7 +256,7 @@ ECBClass::~ECBClass() {
 			if(nextECB != NULL) nextECB->prevECB = prevECB;
 		}
 	}
-	if(databuffer!=0) delete [] databuffer;
+  delete[] databuffer;
 }
 
 

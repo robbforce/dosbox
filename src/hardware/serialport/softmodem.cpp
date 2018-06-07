@@ -63,9 +63,9 @@ CSerialModem::CSerialModem(Bitu id, CommandLine* cmd):CSerial(id, cmd) {
 }
 
 CSerialModem::~CSerialModem() {
-	if(serversocket) delete serversocket;
-	if(clientsocket) delete clientsocket;
-	if(waitingclientsocket) delete waitingclientsocket;
+	delete serversocket;
+	delete clientsocket;
+	delete waitingclientsocket;
 
 	delete rqueue;
 	delete tqueue;
@@ -233,11 +233,9 @@ void CSerialModem::Reset(){
 	cmdbuf[0]=0;
 	oldDTRstate = getDTR();
 	flowcontrol = 0;
-	plusinc = 0;
-	if(clientsocket) {
-		delete clientsocket;
-		clientsocket=0;
-	}
+	plusinc = 0;// clear current incoming socket
+	delete clientsocket;
+	clientsocket=0;
 	memset(&reg,0,sizeof(reg));
 	reg[MREG_AUTOANSWER_COUNT]=0;	// no autoanswer
 	reg[MREG_RING_COUNT] = 1;
@@ -259,15 +257,13 @@ void CSerialModem::EnterIdleState(void){
 	connected=false;
 	ringing=false;
 	
-	if(clientsocket) {
-		delete clientsocket;
-		clientsocket=0;
-	}
+	delete clientsocket;
+	clientsocket=0;
 
-	if(waitingclientsocket) {	// clear current incoming socket
-		delete waitingclientsocket;
-		waitingclientsocket=0;
-	}
+	// clear current incoming socket
+	delete waitingclientsocket;
+	waitingclientsocket=0;
+
 	// get rid of everything
 	if(serversocket) {
 		while(waitingclientsocket=serversocket->Accept())

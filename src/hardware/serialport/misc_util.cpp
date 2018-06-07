@@ -158,7 +158,7 @@ TCPClientSocket::TCPClientSocket(const char* destination, Bit16u port) {
 
 TCPClientSocket::~TCPClientSocket() {
 	
-	if(sendbuffer) delete [] sendbuffer;
+  delete[] sendbuffer;
 #ifdef NATIVESOCKETS
 	if(nativetcpstruct) delete [] nativetcpstruct;
 	else
@@ -282,7 +282,7 @@ void TCPClientSocket::FlushBuffer() {
 }
 
 void TCPClientSocket::SetSendBufferSize(Bitu bufsize) {
-	if(sendbuffer) delete [] sendbuffer;
+	delete [] sendbuffer;
 	sendbuffer = new Bit8u[bufsize];
 	sendbuffersize=bufsize;
 	sendbufferindex=0;

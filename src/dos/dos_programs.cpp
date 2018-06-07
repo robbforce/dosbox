@@ -388,7 +388,8 @@ public:
 		}
 		if (Drives[drive-'A']) {
 			WriteOut(MSG_Get("PROGRAM_MOUNT_ALREADY_MOUNTED"),drive,Drives[drive-'A']->GetInfo());
-			if (newdrive) delete newdrive;
+      delete newdrive;
+      newdrive = 0;
 			return;
 		}
 		if (!newdrive) E_Exit("DOS:Can't create drive");
@@ -655,7 +656,7 @@ public:
 				Bit32u rombytesize;
 				FILE *usefile = getFSFile(temp_line.c_str(), &floppysize, &rombytesize);
 				if(usefile != NULL) {
-					if(diskSwap[i] != NULL) delete diskSwap[i];
+          delete diskSwap[i];
 					diskSwap[i] = new imageDisk(usefile, (Bit8u *)temp_line.c_str(), floppysize, false);
 					if (usefile_1==NULL) {
 						usefile_1=usefile;
@@ -716,10 +717,8 @@ public:
 							WriteOut(MSG_Get("PROGRAM_BOOT_CART_NO_CMDS"));
 						}
 						for(Bitu dct=0;dct<MAX_SWAPPABLE_DISKS;dct++) {
-							if(diskSwap[dct]!=NULL) {
-								delete diskSwap[dct];
-								diskSwap[dct]=NULL;
-							}
+						  delete diskSwap[dct];
+							diskSwap[dct]=NULL;
 						}
 						//fclose(usefile_1); //delete diskSwap closes the file
 						return;
@@ -748,10 +747,8 @@ public:
 								WriteOut(MSG_Get("PROGRAM_BOOT_CART_NO_CMDS"));
 							}
 							for(Bitu dct=0;dct<MAX_SWAPPABLE_DISKS;dct++) {
-								if(diskSwap[dct]!=NULL) {
-									delete diskSwap[dct];
-									diskSwap[dct]=NULL;
-								}
+								delete diskSwap[dct];
+								diskSwap[dct]=NULL;
 							}
 							//fclose(usefile_1); //Delete diskSwap closes the file
 							return;
@@ -804,10 +801,8 @@ public:
 
 				//Close cardridges
 				for(Bitu dct=0;dct<MAX_SWAPPABLE_DISKS;dct++) {
-					if(diskSwap[dct]!=NULL) {
-						delete diskSwap[dct];
-						diskSwap[dct]=NULL;
-					}
+					delete diskSwap[dct];
+					diskSwap[dct]=NULL;
 				}
 
 

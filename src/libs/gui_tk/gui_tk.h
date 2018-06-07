@@ -387,7 +387,7 @@ protected:
 	/// Manage a native string's memory.
 	void addNative(Native *dest) const {
 		const class std::type_info &type = typeid(dest);
-		if (strings[&type] != NULL) delete strings[&type];
+		delete strings[&type];
 		strings[&type] = dest;
 	}
 

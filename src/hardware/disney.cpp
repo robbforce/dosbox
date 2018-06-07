@@ -382,8 +382,8 @@ public:
 	}
 	~DISNEY(){
 		DISNEY_disable(0);
-		if (disney.mo)
-			delete disney.mo;
+    delete disney.mo;
+    disney.mo = 0;
 	}
 };
 

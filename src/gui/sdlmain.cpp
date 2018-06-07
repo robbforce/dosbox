@@ -2253,7 +2253,7 @@ void restart_program(std::vector<std::string> & parameters) {
 #endif
 		E_Exit("Restarting failed");
 	}
-	free(newargs);
+  delete[] newargs;
 }
 void Restart(bool pressed) { // mapper handler
 	restart_program(control->startup_params);

@@ -1275,11 +1275,10 @@ public:
 	}
 
 	~SERIALPORTS () {
-		for (Bitu i = 0; i < 4; i++)
-			if (serialports[i]) {
-				delete serialports[i];
-				serialports[i] = 0;
-			}
+    for (Bitu i = 0; i < 4; i++) {
+      delete serialports[i];
+      serialports[i] = 0;
+    }
 	}
 };
 
@@ -1292,7 +1291,7 @@ void SERIAL_Destroy (Section * sec) {
 
 void SERIAL_Init (Section * sec) {
 	// should never happen
-	if (testSerialPortsBaseclass) delete testSerialPortsBaseclass;
+	delete testSerialPortsBaseclass;
 	testSerialPortsBaseclass = new SERIALPORTS (sec);
 	sec->AddDestroyFunction (&SERIAL_Destroy, true);
 }

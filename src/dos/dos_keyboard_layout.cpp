@@ -1282,10 +1282,8 @@ public:
 			INT10_ReloadRomFonts();
 			dos.loaded_codepage=437;	// US codepage
 		}
-		if (loaded_layout) {
-			delete loaded_layout;
-			loaded_layout=NULL;
-		}
+    delete loaded_layout;
+		loaded_layout=NULL;
 	}
 };
 

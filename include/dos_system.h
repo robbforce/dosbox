@@ -62,16 +62,16 @@ class DOS_DTA;
 
 class DOS_File {
 public:
-	DOS_File():flags(0)		{ name=0; refCtr = 0; hdrive=0xff; };
+  DOS_File() :flags(0), refCtr(0), name(0), hdrive(0xff) { }
 	DOS_File(const DOS_File& orig);
 	DOS_File & operator= (const DOS_File & orig);
-	virtual	~DOS_File(){if(name) delete [] name;};
+  virtual	~DOS_File() { delete[] name; };
 	virtual bool	Read(Bit8u * data,Bit16u * size)=0;
 	virtual bool	Write(Bit8u * data,Bit16u * size)=0;
 	virtual bool	Seek(Bit32u * pos,Bit32u type)=0;
 	virtual bool	Close()=0;
 	virtual Bit16u	GetInformation(void)=0;
-	virtual void	SetName(const char* _name)	{ if (name) delete[] name; name = new char[strlen(_name)+1]; strcpy(name,_name); }
+  virtual void	SetName(const char* _name) { delete[] name; name = new char[strlen(_name) + 1]; strcpy(name, _name); }
 	virtual char*	GetName(void)				{ return name; };
 	virtual bool	IsOpen()					{ return open; };
 	virtual bool	IsName(const char* _name)	{ if (!name) return false; return strcasecmp(name,_name)==0; };

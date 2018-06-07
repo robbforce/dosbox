@@ -152,8 +152,8 @@ CNullModem::CNullModem(Bitu id, CommandLine* cmd):CSerial (id, cmd) {
 }
 
 CNullModem::~CNullModem() {
-	if (serversocket) delete serversocket;
-	if (clientsocket) delete clientsocket;
+	delete serversocket;
+	delete clientsocket;
 	// remove events
 	for(Bit16u i = SERIAL_BASE_EVENT_COUNT+1;
 			i <= SERIAL_NULLMODEM_EVENT_COUNT; i++) {

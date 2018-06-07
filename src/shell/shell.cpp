@@ -172,7 +172,7 @@ Bitu DOS_Shell::GetRedirection(char *s, char **ifn, char **ofn,bool * append) {
 			*append=((*lr)=='>');
 			if (*append) lr++;
 			lr=ltrim(lr);
-			if (*ofn) free(*ofn);
+      free(*ofn);
 			*ofn=lr;
 			while (*lr && *lr!=' ' && *lr!='<' && *lr!='|') lr++;
 			//if it ends on a : => remove it.
@@ -186,7 +186,7 @@ Bitu DOS_Shell::GetRedirection(char *s, char **ifn, char **ofn,bool * append) {
 			*ofn=t;
 			continue;
 		case '<':
-			if (*ifn) free(*ifn);
+      free(*ifn);
 			lr=ltrim(lr);
 			*ifn=lr;
 			while (*lr && *lr!=' ' && *lr!='>' && *lr != '|') lr++;

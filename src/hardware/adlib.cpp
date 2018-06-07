@@ -884,12 +884,8 @@ Module::Module( Section* configuration ) : Module_base(configuration) {
 }
 
 Module::~Module() {
-	if ( capture ) {
-		delete capture;
-	}
-	if ( handler ) {
-		delete handler;
-	}
+  delete capture;
+  delete handler;
 }
 
 //Initialize static members

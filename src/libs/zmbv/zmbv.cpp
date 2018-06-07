@@ -524,18 +524,10 @@ void VideoCodec::Output_UpsideDown_24(void *output) {
 }
 
 void VideoCodec::FreeBuffers(void) {
-	if (blocks) {
-		delete[] blocks;blocks=0;
-	}
-	if (buf1) {
-		delete[] buf1;buf1=0;
-	}
-	if (buf2) {
-		delete[] buf2;buf2=0;
-	}
-	if (work) {
-		delete[] work;work=0;
-	}
+	delete[] blocks;blocks=0;
+	delete[] buf1;buf1=0;
+	delete[] buf2;buf2=0;
+	delete[] work;work=0;
 }
 
 

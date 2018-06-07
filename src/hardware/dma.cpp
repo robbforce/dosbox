@@ -96,10 +96,8 @@ DmaChannel * GetDMAChannel(Bit8u chan) {
 
 /* remove the second DMA controller (ports are removed automatically) */
 void CloseSecondDMAController(void) {
-	if (DmaControllers[1]) {
-		delete DmaControllers[1];
-		DmaControllers[1]=NULL;
-	}
+  delete DmaControllers[1];
+  DmaControllers[1] = NULL;
 }
 
 /* check availability of second DMA controller, needed for SB16 */
@@ -373,14 +371,10 @@ public:
 		}
 	}
 	~DMA(){
-		if (DmaControllers[0]) {
-			delete DmaControllers[0];
-			DmaControllers[0]=NULL;
-		}
-		if (DmaControllers[1]) {
-			delete DmaControllers[1];
-			DmaControllers[1]=NULL;
-		}
+    for (Bitu i = 0; i < 2; ++i) {
+      delete DmaControllers[i];
+      DmaControllers[i] = NULL;
+    }
 	}
 };
 

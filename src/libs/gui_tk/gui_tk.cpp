@@ -514,10 +514,10 @@ BitmapFont::BitmapFont(const unsigned char *data, int height, int ascent, bool o
 
 BitmapFont::~BitmapFont() {
 	if (owner) {
-		if (bitmap != NULL) delete bitmap;
-		if (ascents != NULL) delete ascents;
-		if (widths != NULL) delete widths;
-		if (special != NULL) delete special;
+		delete bitmap;
+		delete ascents;
+		delete widths;
+		delete special;
 	}
 }
 

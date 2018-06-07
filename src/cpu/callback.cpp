@@ -546,7 +546,7 @@ void CALLBACK_HandlerObject::Uninstall(){
 	} else if(m_type == CALLBACK_HandlerObject::NONE){
 		//Do nothing. Merely DeAllocate the callback
 	} else E_Exit("what kind of callback is this!");
-	if(CallBack_Description[m_callback]) delete [] CallBack_Description[m_callback];
+  delete[] CallBack_Description[m_callback];
 	CallBack_Description[m_callback] = 0;
 	CALLBACK_DeAllocate(m_callback);
 	installed=false;
