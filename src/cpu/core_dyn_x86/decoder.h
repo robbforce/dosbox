@@ -1492,7 +1492,7 @@ static void dyn_grp1_ev_ivx(bool withbyte) {
 }
 
 enum grp2_types {
-	grp2_1,grp2_imm,grp2_cl,
+	grp2_1,grp2_imm,grp2_cl
 };
 
 static void dyn_grp2_eb(grp2_types type) {
@@ -1992,7 +1992,6 @@ static CacheBlock * CreateCacheBlock(CodePageHandler * codepage,PhysPt start,Bit
 /* Init a load of variables */
 	decode.code_start=start;
 	decode.code=start;
-	Bitu cycles=0;
 	decode.page.code=codepage;
 	decode.page.index=start&4095;
 	decode.page.wmap=codepage->write_map;

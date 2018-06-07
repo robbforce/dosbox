@@ -25,8 +25,8 @@ private:
 	Bit8u device_num;
 	bool isOpen;
 public:
-	MidiHandler_oss() : MidiHandler(),isOpen(false) {};
-	const char * GetName(void) { return "oss";};
+  MidiHandler_oss() : MidiHandler(), isOpen(false) {}
+  const char * GetName(void) { return "oss"; }
 	bool Open(const char * conf) {
 		char devname[512];
 		if (conf && conf[0]) safe_strncpy(devname,conf,512);

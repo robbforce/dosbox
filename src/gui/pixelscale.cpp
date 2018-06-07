@@ -475,7 +475,6 @@ static inline void fill_boundary
 (	uchar** row, info* si, line_info *ci, ps_pixels pix_in,
 	NEIGHBOR n, cell_info *cell, uchar* pixel )
 {	uchar cur_diff, add_diff;
-	uchar weight;
 	uchar    **bounds    = si->bound_cols;
 	uchar* color;
 	signed *weights;
@@ -575,8 +574,7 @@ static void scale_init
 	uchar** mid_rowP, ps_rect* area,
 	unsigned* width_bytesP, rowstart* rsP
 )
-{	ps_rect col_rect;
-	// WARN: for some reason the local buffer works faster even though
+{	// WARN: for some reason the local buffer works faster even though
 	//       I have to allocate and initialize it at every call:
 	*mid_rowP = (uchar*)malloc( pix_out.pitch );
 	handle_dwh_scale( si->dw, si->dh, pix_inP, area );

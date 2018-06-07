@@ -708,7 +708,6 @@ char ssSetSize(Bitu width,Bitu height,Bitu flags,double scalex,double scaley, Bi
 {	bool fixed;
 	Bit16u av_h, av_w, out_w, out_h;
 	int bpp;
-	SURFACE_MODE sm;
 
 	if( sdl.pixel_scaling != NULL )
 	{	ps_free( sdl.pixel_scaling );
@@ -747,7 +746,6 @@ char ssSetSize(Bitu width,Bitu height,Bitu flags,double scalex,double scaley, Bi
 
 	sdl.ps_scale_x = ( double )out_w / width;
 	sdl.ps_scale_y = ( double )out_h / height;
-	char s[80];
 	LOG_MSG
 	(	"Scaling: %ix%i (%4.2f) --[%3.1f x %3.1f]--> %4ix%-4i (%4.2f)",
 		width, height, sdl.draw.aspect,

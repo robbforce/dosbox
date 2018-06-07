@@ -50,7 +50,7 @@ void INT10_SetSinglePaletteRegister(Bit8u reg,Bit8u val) {
 			else reg |= 0x10;
 			WriteTandyACTL(reg+0x10,val);
 			break;
-		case M_TANDY4: {
+		case M_TANDY4:
 			if (CurMode->mode!=0x0a) {
 				// Palette values are kept constand by the BIOS.
 				// The four colors are mapped to special palette values by hardware.
@@ -67,7 +67,6 @@ void INT10_SetSinglePaletteRegister(Bit8u reg,Bit8u val) {
 			// 4-color high resolution mode 0x0a isn't handled specially
 			else WriteTandyACTL(reg+0x10,val);
 			break;
-		}
 		default:
 			WriteTandyACTL(reg+0x10,val);
 			break;

@@ -1151,7 +1151,7 @@ CSerial::~CSerial(void) {
 	DOS_DelDevice(mydosdevice);
 	for(Bitu i = 0; i <= SERIAL_BASE_EVENT_COUNT; i++)
 		removeEvent(i);
-};
+}
 bool CSerial::Getchar(Bit8u* data, Bit8u* lsr, bool wait_dsr, Bitu timeout) {
 	double starttime=PIC_FullIndex();
 	// wait for DSR on

@@ -635,7 +635,7 @@ Channel::Channel() {
 	feedback = 31;
 	fourMask = 0;
 	synthHandler = &Channel::BlockTemplate< sm2FM >;
-};
+}
 
 void Channel::SetChanData( const Chip* chip, Bit32u data ) {
 	Bit32u change = chanData ^ data;
@@ -1518,4 +1518,4 @@ void Handler::Init( Bitu rate ) {
 }
 
 
-};		//Namespace DBOPL
+}		//Namespace DBOPL

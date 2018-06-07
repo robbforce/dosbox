@@ -815,8 +815,8 @@ Bit8u FCB_Parsename(Bit16u seg,Bit16u offset,Bit8u parser ,char *string, Bit8u *
 		mem_writeb(PhysMake(seg,offset),0);
 	}
 	DOS_FCB fcb(seg,offset,false);	// always a non-extended FCB
-	bool hasdrive,hasname,hasext,finished;
-	hasdrive=hasname=hasext=finished=false;
+  bool hasdrive, hasname, hasext;
+	hasdrive = hasname = hasext = false;
 	Bitu index=0;
 	Bit8u fill=' ';
 /* First get the old data from the fcb */
@@ -870,7 +870,7 @@ Bit8u FCB_Parsename(Bit16u seg,Bit16u offset,Bit8u parser ,char *string, Bit8u *
 	/* do nothing if not a valid name */
 	if(!isvalid(string[0])) goto savefcb;
 
-	hasname=true;finished=false;fill=' ';index=0;
+  hasname = true; fill = ' '; index = 0;
 	/* Copy the name */	
 	while (true) {
 		unsigned char nc = *reinterpret_cast<unsigned char*>(&string[0]);
@@ -894,7 +894,7 @@ Bit8u FCB_Parsename(Bit16u seg,Bit16u offset,Bit8u parser ,char *string, Bit8u *
 	string++;
 checkext:
 	/* Copy the extension */
-	hasext=true;finished=false;fill=' ';index=0;
+  hasext = true; fill = ' '; index = 0;
 	while (true) {
 		unsigned char nc = *reinterpret_cast<unsigned char*>(&string[0]);
 		char ncs = (char)toupper(nc);

@@ -80,7 +80,7 @@ enum {
 
 enum SingleOps {
 	SOP_INC,SOP_DEC,
-	SOP_NOT,SOP_NEG,
+	SOP_NOT,SOP_NEG
 };
 
 enum DualOps {
@@ -90,14 +90,14 @@ enum DualOps {
 	DOP_AND,DOP_OR,
 	DOP_TEST,
 	DOP_MOV,
-	DOP_XCHG,
+	DOP_XCHG
 };
 
 enum ShiftOps {
 	SHIFT_ROL,SHIFT_ROR,
 	SHIFT_RCL,SHIFT_RCR,
 	SHIFT_SHL,SHIFT_SHR,
-	SHIFT_SAL,SHIFT_SAR,
+	SHIFT_SAL,SHIFT_SAR
 };
 
 enum BranchTypes {
@@ -147,7 +147,7 @@ enum DynAccess {
 
 enum ByteCombo {
 	BC_ll,BC_lh,
-	BC_hl,BC_hh,
+	BC_hl,BC_hh
 };
 
 static DynReg DynRegs[G_MAX];

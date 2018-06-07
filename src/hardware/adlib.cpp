@@ -718,7 +718,7 @@ void Module::Init( Mode m ) {
 	}
 }
 
-}; //namespace
+} //namespace
 
 
 
@@ -783,7 +783,7 @@ static void SaveRad() {
 	}
 	fwrite( b, 1, w, handle );
 	fclose( handle );
-};
+}
 
 
 static void OPL_SaveRawEvent(bool pressed) {
@@ -891,7 +891,7 @@ Module::~Module() {
 //Initialize static members
 OPL_Mode Module::oplmode=OPL_none;
 
-};	//Adlib Namespace
+}	//Adlib Namespace
 
 
 void OPL_Init(Section* sec,OPL_Mode oplmode) {
