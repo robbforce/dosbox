@@ -1,8 +1,8 @@
+#include "pixelscale.h"
 #include <stdio.h>
-#include <math.h>
 #include <string.h>
 #include <stdlib.h>
-#include "pixelscale.h"
+#include <cmath>
 typedef unsigned char uchar;
 
 typedef struct line_info
@@ -51,8 +51,8 @@ typedef struct junct_info
 
 static junct_info get_junct_info( double scale, char nb )
 {	junct_info ji;
-	ji.low     = floor(scale);
-	ji.high    = ji.low + 1;
+	ji.low     = (uchar)floor(scale);
+	ji.high    = (uchar)ji.low + 1;
 	ji.diff_hi =  (double)ji.high - scale;
 	ji.diff_lo = -(double)ji.low  + scale;
 	if( nb )
@@ -88,8 +88,7 @@ static void li_setsize( junct_info ji, line_info* pli, double *diff )
 
 static line_info *li_get( unsigned length, double scale, double softness )
 {	double diff = 0.0;
-	int i;
-	int edgeDiff;
+	unsigned int i;
 	char nb = (softness == 0.0);
 	double dweight;
 	int*   edgeWeight;
@@ -116,7 +115,7 @@ static line_info *li_get( unsigned length, double scale, double softness )
 				edgeWeight = &pli->weight_r;
 			}
 			dweight     = pow( dweight, softness );
-			*edgeWeight = round( dweight * 256 );
+			*edgeWeight = (int)round( dweight * 256 );
 		}
 
 		li_filldim( pli, left );
@@ -134,7 +133,7 @@ static uchar* new_color( info* si )
 {	return (uchar*)malloc( si->comp_n );  } 
 
 static void init_cells( info* si )
-{	int y, x;
+{	unsigned int y, x;
 	line_info ri, ci;
 	ps_size size_in = si->size_in;
 	si->cells    = (cell_info*)calloc( sizeof( cell_info ), size_in.w * size_in.h );
@@ -166,9 +165,9 @@ static double rounddl( double f )
 static void get_perfect_scale_asp
 ( double ar_in, double a_in, double a_out, double ratio, int *scalex, int *scaley )
 {	const double ASPECT_IMPORTANCE = 1.14; // Heruistic parameter
-	int sx, sy, sx_best, sy_best;
-	int sx_max = floor(ratio);
-	int sy_max = floor( ratio * a_out / ar_in + 0.000000000000005 );
+	int sx, sy;
+	int sx_max = (int)floor(ratio);
+	int sy_max = (int)floor( ratio * a_out / ar_in + 0.000000000000005 );
 	if( sy_max == 0 )
 	{	sy_max = 1;  } // HACK for small output sizes
 	double bestfit = -99.0;
@@ -176,7 +175,7 @@ static void get_perfect_scale_asp
 	double fit;
 	double err_aspect;
 	for( sx = sx_max; sx > 0; sx-- )
-	{	sy = rounddl( (double)sx * a_in );
+	{	sy = (int)rounddl( (double)sx * a_in );
 		if( sy == 0 )
 		{	sy = 1;  } // HACK for small output sizes
 		if( sy > sy_max )
@@ -260,7 +259,7 @@ static ps_info new_info
 	char      dw,
 	char      dh
 )
-{	int i;
+{ unsigned int i;
 	ps_info res = (ps_info)malloc(sizeof(info));
 	info* si = (info*)res;
 	si->dw        = dw;
@@ -543,10 +542,10 @@ static void pass_through
 }
 
 static void set_area( info* si, ps_rect* area )
-{	area->x = round( si->scale_x * area->x );
-	area->w = round( si->scale_x * area->w );
-	area->y = round( si->scale_y * area->y );
-	area->h = round( si->scale_y * area->h );
+{	area->x = (int)round( si->scale_x * area->x );
+	area->w = (int)round( si->scale_x * area->w );
+	area->y = (int)round( si->scale_y * area->y );
+	area->h = (int)round( si->scale_y * area->h );
 }
 
 typedef struct rowstart
@@ -597,7 +596,7 @@ static void scale_init
 
 static void loopx_nb
 (	info* si, ps_rect *area, uchar* src, uchar* mid_row, rowstart* rs )
-{	int x_in;
+{	unsigned int x_in;
 	line_info ci;
 	uchar* mid_cur;
 	cell_info* cell;
@@ -616,7 +615,7 @@ static void loopx_np
 (	info* si, ps_rect *area, uchar* src, uchar* mid_row, rowstart* rs,
 	line_info ri, ps_pixels pix_in, ps_pixels pix_out
 )
-{	int x_in;
+{	unsigned int x_in;
 	line_info ci;
 	cell_info* cell;
 	uchar *top_cur, *bot_cur;
@@ -648,7 +647,7 @@ static void loopx_np
 
 void ps_scale( ps_info const osi, ps_pixels pix_in, ps_pixels const pix_out, ps_rect* area )
 {	info* si = (info*)osi;
-	int       y_in;
+	unsigned int y_in;
 	uchar     mid_y;
 	line_info ri;
 	uchar*    mid_row;

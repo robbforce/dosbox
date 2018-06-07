@@ -8,7 +8,7 @@
 #define PIXEL_SCALE
 
 typedef struct ps_rect
-{	int x, y, w, h;  } ps_rect;
+{	unsigned int x, y, w, h; } ps_rect;
 
 typedef struct ps_format
 {	unsigned char offs;

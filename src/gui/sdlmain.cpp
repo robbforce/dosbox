@@ -639,7 +639,7 @@ void ssImageToScreen()
 	}
 	else
 	{	if ( sdl.rectCount > 0 )
-		{	for( int i = 0; i < sdl.rectCount; i++ )
+		{	for( unsigned int i = 0; i < sdl.rectCount; i++ )
 			{	sdl.updateRects[i].x += sdl.clip.x;
 				sdl.updateRects[i].y += sdl.clip.y;
 			}
@@ -666,15 +666,13 @@ static void rect_ps_to_sdl( ps_rect const rect_ps, SDL_Rect* rect_sdl )
 }
 
 void ssPsEndUpdate()
-{	int i;
-	Bitu pitch_bitu; // for type compatibility
+{	Bitu pitch_bitu; // for type compatibility
 	ps_pixels pix_out;
 	ps_rect rect;
-	SDL_PixelFormat* format;
 
 	ssGetOutPixels( &pix_out.pixels, &pitch_bitu );
 	pix_out.pitch = pitch_bitu;
-	for( int i = 0; i < sdl.rectCount; i++ )
+	for( unsigned int i = 0; i < sdl.rectCount; i++ )
 	{	rect_sdl_to_ps( sdl.updateRects[i], &rect ); 
 		if( sdl.dbl_w )
 		{	if( rect.y % 2 != 0 )

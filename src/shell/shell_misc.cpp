@@ -372,11 +372,11 @@ void DOS_Shell::InputCommand(char * line) {
 }
 
 std::string full_arguments = "";
-bool DOS_Shell::Execute(char * name,char * args) {
+bool DOS_Shell::Execute(const char * name, char * args) {
 /* return true  => don't check for hardware changes in do_command 
  * return false =>       check for hardware changes in do_command */
 	char fullname[DOS_PATHLENGTH+4]; //stores results from Which
-	char* p_fullname;
+  const char* p_fullname;
 	char line[CMD_MAXLINE];
 	if(strlen(args)!= 0){
 		if(*args != ' '){ //put a space in front
@@ -559,7 +559,7 @@ static const char * com_ext=".COM";
 static const char * exe_ext=".EXE";
 static char which_ret[DOS_PATHLENGTH+4];
 
-char * DOS_Shell::Which(char * name) {
+const char * DOS_Shell::Which(const char * name) {
 	size_t name_len = strlen(name);
 	if(name_len >= DOS_PATHLENGTH) return 0;
 

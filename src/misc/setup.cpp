@@ -919,7 +919,7 @@ bool CommandLine::FindExist(char const * const name,bool remove) {
 	return true;
 }
 
-bool CommandLine::FindHex(char const * const name,int & value,bool remove) {
+bool CommandLine::FindHex(char const * const name, unsigned int & value, bool remove) {
 	cmd_it it,it_next;
 	if (!(FindEntry(name,it,true))) return false;
 	it_next=it;it_next++;
