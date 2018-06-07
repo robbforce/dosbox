@@ -591,7 +591,7 @@ private:
 		strcpy(test,"ems=false");
 		dos_sec->HandleInputline(test);
 		dos_sec->ExecuteInit(false);
-     }
+  }
 
 public:
    

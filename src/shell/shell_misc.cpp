@@ -425,14 +425,14 @@ bool DOS_Shell::Execute(const char * name, char * args) {
 			strcpy(temp_name,fullname);
 			strcat(temp_name,".EXE");
 			temp_fullname=Which(temp_name);
-		 	if (temp_fullname) { extension=".exe";strcpy(fullname,temp_fullname);}
+      if (temp_fullname) { extension = ".exe"; strcpy(fullname, temp_fullname); }
 
 			else 
 			{
 				strcpy(temp_name,fullname);
 				strcat(temp_name,".BAT");
 				temp_fullname=Which(temp_name);
-		 		if (temp_fullname) { extension=".bat";strcpy(fullname,temp_fullname);}
+        if (temp_fullname) { extension = ".bat"; strcpy(fullname, temp_fullname); }
 
 				else  
 				{

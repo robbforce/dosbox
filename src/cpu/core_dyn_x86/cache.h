@@ -242,7 +242,7 @@ public:
 		host_writed(hostmem+addr,val);
 		return false;
 	}
-    void AddCacheBlock(CacheBlock * block) {
+  void AddCacheBlock(CacheBlock * block) {
 		Bitu index=1+(block->page.start>>DYN_HASH_SHIFT);
 		block->hash.next=hash_map[index];
 		block->hash.index=index;
@@ -250,7 +250,7 @@ public:
 		block->page.handler=this;
 		active_blocks++;
 	}
-    void AddCrossBlock(CacheBlock * block) {
+  void AddCrossBlock(CacheBlock * block) {
 		block->hash.next=hash_map[0];
 		block->hash.index=0;
 		hash_map[0]=block;

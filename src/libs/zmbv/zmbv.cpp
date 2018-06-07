@@ -412,7 +412,7 @@ bool VideoCodec::DecompressFrame(void * framedata, int size) {
 		KeyframeHeader * header = (KeyframeHeader *)data;
 		size -= sizeof(KeyframeHeader);data += sizeof(KeyframeHeader);
 		if (size<=0)
-            return false;
+      return false;
 		if (header->low_version != DBZV_VERSION_LOW || header->high_version != DBZV_VERSION_HIGH) 
 			return false;
 		if (format != (zmbv_format_t)header->format && !SetupBuffers((zmbv_format_t)header->format, header->blockwidth, header->blockheight))

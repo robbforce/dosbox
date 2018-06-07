@@ -451,8 +451,8 @@ static void GenerateDMASound(Bitu size) {
 		if (sb.dma.stereo) {
 			read=sb.dma.chan->Read(size,&sb.dma.buf.b8[sb.dma.remain_size]);
 			Bitu total=read+sb.dma.remain_size;
-            if (!sb.dma.sign)  sb.chan->AddSamples_s8(total>>1,sb.dma.buf.b8);
-            else sb.chan->AddSamples_s8s(total>>1,(Bit8s*)sb.dma.buf.b8); 
+      if (!sb.dma.sign)  sb.chan->AddSamples_s8(total>>1,sb.dma.buf.b8);
+      else sb.chan->AddSamples_s8s(total>>1,(Bit8s*)sb.dma.buf.b8); 
 			if (total&1) {
 				sb.dma.remain_size=1;
 				sb.dma.buf.b8[0]=sb.dma.buf.b8[total-1];

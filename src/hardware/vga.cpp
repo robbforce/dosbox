@@ -115,7 +115,7 @@ void VGA_SetClock(Bitu which,Bitu target) {
 	for (r = 0; r <= 3; r++) {
 		Bitu f_vco = target * (1 << r);
 		if (MIN_VCO <= f_vco && f_vco < MAX_VCO) break;
-    }
+  }
 	for (n=1;n<=31;n++) {
 		m=(target * (n + 2) * (1 << r) + (S3_CLOCK_REF/2)) / S3_CLOCK_REF - 2;
 		if (0 <= m && m <= 127)	{
@@ -128,7 +128,7 @@ void VGA_SetClock(Bitu which,Bitu target) {
 				best.n = n;
 			}
 		}
-    }
+  }
 	/* Program the s3 clock chip */
 	vga.s3.clk[which].m=best.m;
 	vga.s3.clk[which].r=r;

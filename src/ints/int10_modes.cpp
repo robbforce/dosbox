@@ -465,7 +465,7 @@ static void FinishSetMode(bool clearmem) {
 			Bit16u seg = (CurMode->mode==7)?0xb000:0xb800;
 			for (Bit16u ct=0;ct<16*1024;ct++) real_writew(seg,ct*2,0x0720);
 			break;
-		}
+		  }
 		case M_EGA:	
 		case M_VGA:
 		case M_LIN8:
@@ -1495,7 +1495,7 @@ Bitu VideoModeMemSize(Bitu mode) {
 		i++;
 	}
 	if (!vmodeBlock)
-        return 0;
+    return 0;
 
 	switch(vmodeBlock->type) {
 	case M_LIN4:

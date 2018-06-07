@@ -348,7 +348,7 @@ static Bitu INT13_DiskHandler(void) {
 			last_status = 0x00;
 			CALLBACK_SCF(false);
 		}
-        break;
+    break;
 	case 0x1: /* Get status of last operation */
 
 		if(last_status != 0x00) {
@@ -404,7 +404,7 @@ static Bitu INT13_DiskHandler(void) {
 			reg_ah = 0xff;
 			CALLBACK_SCF(true);
 			return CBRET_NONE;
-        }                     
+    }                     
 
 
 		bufptr = reg_bx;
@@ -416,13 +416,13 @@ static Bitu INT13_DiskHandler(void) {
 
 			last_status = imageDiskList[drivenum]->Write_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0) << 2)), (Bit32u)((reg_cl & 63) + i), &sectbuf[0]);
 			if(last_status != 0x00) {
-            CALLBACK_SCF(true);
+        CALLBACK_SCF(true);
 				return CBRET_NONE;
 			}
-        }
+    }
 		reg_ah = 0x00;
 		CALLBACK_SCF(false);
-        break;
+    break;
 	case 0x04: /* Verify sectors */
 		if (reg_al==0) {
 			reg_ah = 0x01;
@@ -451,8 +451,7 @@ static Bitu INT13_DiskHandler(void) {
 		//Qbix: The following codes don't match my specs. al should be number of sector verified
 		//reg_al = 0x10; /* CRC verify failed */
 		//reg_al = 0x00; /* CRC verify succeeded */
-		CALLBACK_SCF(false);
-          
+		CALLBACK_SCF(false);   
 		break;
 	case 0x05: /* Format track */
 		if (driveInactive(drivenum)) {

@@ -545,7 +545,7 @@ void SHELL_Init() {
 	MSG_Add("SHELL_CMD_DATE_HELP_LONG","DATE [[/T] [/H] [/S] | MM-DD-YYYY]\n"\
 									"  MM-DD-YYYY: new date to set\n"\
 									"  /S:         Permanently use host time and date as DOS time\n"\
-                                    "  /F:         Switch back to DOSBox internal time (opposite of /S)\n"\
+                  "  /F:         Switch back to DOSBox internal time (opposite of /S)\n"\
 									"  /T:         Only display date\n"\
 									"  /H:         Synchronize with host\n");
 	MSG_Add("SHELL_CMD_TIME_HELP","Displays the internal time.\n");

@@ -1216,14 +1216,14 @@ void DOS_Shell::CMD_PATH(char *args){
 		char pathstring[DOS_PATHLENGTH+CROSS_LEN+20]={ 0 };
 		strcpy(pathstring,"set PATH=");
 		while(args && *args && (*args=='='|| *args==' ')) 
-		     args++;
+      args++;
 		strcat(pathstring,args);
 		this->ParseLine(pathstring);
 		return;
 	} else {
 		std::string line;
 		if(GetEnvStr("PATH",line)) {
-        		WriteOut("%s",line.c_str());
+      WriteOut("%s",line.c_str());
 		} else {
 			WriteOut("PATH=(null)");
 		}

@@ -593,7 +593,7 @@ void CPU_Interrupt(Bitu num,Bitu type,Bitu oldeip) {
 		Descriptor gate;
 		if (!cpu.idt.GetDescriptor(num<<3,gate)) {
 			// zone66
-			CPU_Exception(EXCEPTION_GP,num*8+2+(type&CPU_INT_SOFTWARE)?0:1);
+      CPU_Exception(EXCEPTION_GP, num * 8 + 2 + ((type&CPU_INT_SOFTWARE) ? 0 : 1));
 			return;
 		}
 

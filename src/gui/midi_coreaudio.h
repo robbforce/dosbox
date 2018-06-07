@@ -57,7 +57,7 @@ class MidiHandler_coreaudio : public MidiHandler {
 private:
 	AUGraph m_auGraph;
 	AudioUnit m_synth;
-        const char *soundfont;
+  const char *soundfont;
 public:
 	MidiHandler_coreaudio() : m_auGraph(0), m_synth(0) {}
 	const char * GetName(void) { return "coreaudio"; }

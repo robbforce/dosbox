@@ -66,7 +66,7 @@ Bit32u Netwrapper_GetCapabilities();
 
 
 class TCPClientSocket {
-	public:
+public:
 	TCPClientSocket(TCPsocket source);
 	TCPClientSocket(const char* destination, Bit16u port);
 #ifdef NATIVESOCKETS
@@ -96,7 +96,7 @@ class TCPClientSocket {
 	bool SendByteBuffered(Bit8u data);
 	bool SendArrayBuffered(Bit8u* data, Bitu bufsize);
 
-	private:
+private:
 	TCPsocket mysock;
 	SDLNet_SocketSet listensocketset;
 
@@ -108,7 +108,7 @@ class TCPClientSocket {
 };
 
 class TCPServerSocket {
-	public:
+public:
 	bool isopen;
 	TCPsocket mysock;
 	TCPServerSocket(Bit16u port);

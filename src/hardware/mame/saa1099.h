@@ -28,12 +28,12 @@ class NullInt {
     int value;
 public:
     operator int& () {
-	return value;
+	    return value;
     }
     
     int& operator= ( int set ) {
-	value = set;
-	return value;
+	    value = set;
+	    return value;
     }
     
     NullInt( int set = 0 ) : value( set ) {

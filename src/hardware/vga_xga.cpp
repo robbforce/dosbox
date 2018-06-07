@@ -605,7 +605,7 @@ void XGA_DrawWait(Bitu val, Bitu len) {
 							}
 							break;
 						case 0x40 | M_LIN8: // 32 bit
-                            for(int i = 0; i < 4; i++)
+              for(int i = 0; i < 4; i++)
 								XGA_DrawWaitSub(mixmode, (val>>(8*i))&0xff);
 							break;
 						case (0x20 | M_LIN32):
@@ -661,7 +661,7 @@ void XGA_DrawWait(Bitu val, Bitu len) {
 							chunksize=16;
 							if(len==4) chunks=2;
 							else chunks = 1;
-                           	break;
+              break;
 						case 0x60: // undocumented guess (but works)
 							chunksize=8;
 							chunks=4;
@@ -691,7 +691,7 @@ void XGA_DrawWait(Bitu val, Bitu len) {
 									srcval=0;
 									break;
 							}
-                            XGA_DrawWaitSub(mixmode, srcval);
+              XGA_DrawWaitSub(mixmode, srcval);
 
 							if((xga.waitcmd.cury<2048) &&
 							  (xga.waitcmd.cury >= xga.waitcmd.y2)) {

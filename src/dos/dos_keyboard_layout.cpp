@@ -1070,7 +1070,7 @@ Bitu DOS_LoadKeyboardLayout(const char * layoutname, Bit32s codepage, const char
 }
 
 Bitu DOS_SwitchKeyboardLayout(const char* new_layout, Bit32s& tried_cp) {
-	if (loaded_layout) {
+  if (loaded_layout) {
 		keyboard_layout* changed_layout=NULL;
 		Bitu ret_code=loaded_layout->switch_keyboard_layout(new_layout, changed_layout, tried_cp);
 		if (changed_layout) {
