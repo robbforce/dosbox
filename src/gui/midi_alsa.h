@@ -70,7 +70,7 @@ private:
 		return true;
 	}
 public:
-	MidiHandler_alsa() : MidiHandler() {};
+  MidiHandler_alsa() : MidiHandler(), seq_handle(0), seq_client(0), seq_port(0), my_client(0), my_port(0) {}
 	const char* GetName(void) { return "alsa"; }
 	void PlaySysex(Bit8u * sysex,Bitu len) {
 		snd_seq_ev_set_sysex(&ev, len, sysex);

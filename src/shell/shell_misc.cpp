@@ -412,7 +412,8 @@ bool DOS_Shell::Execute(const char * name, char * args) {
 	{
 		//Check if the result will fit in the parameters. Else abort
 		if(strlen(fullname) >( DOS_PATHLENGTH - 1) ) return false;
-		char temp_name[DOS_PATHLENGTH+4],* temp_fullname;
+    char temp_name[DOS_PATHLENGTH + 4];
+    const char * temp_fullname;
 		//try to add .com, .exe and .bat extensions to filename
 		
 		strcpy(temp_name,fullname);

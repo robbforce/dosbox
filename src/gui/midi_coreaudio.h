@@ -59,7 +59,7 @@ private:
 	AudioUnit m_synth;
   const char *soundfont;
 public:
-	MidiHandler_coreaudio() : m_auGraph(0), m_synth(0) {}
+  MidiHandler_coreaudio() : m_auGraph(0), m_synth(0), soundfont(0) {}
 	const char * GetName(void) { return "coreaudio"; }
 	bool Open(const char * conf) {
 		OSStatus err = 0;

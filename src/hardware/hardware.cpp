@@ -480,7 +480,7 @@ skip_shot:
 			capture.video.handle = OpenCaptureFile("Video",".avi");
 			if (!capture.video.handle)
 				goto skip_video;
-			capture.video.codec = new VideoCodec();
+      capture.video.codec = new(std::nothrow) VideoCodec();
 			if (!capture.video.codec)
 				goto skip_video;
 			if (!capture.video.codec->SetupCompress( width, height)) 

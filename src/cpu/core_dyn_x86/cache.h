@@ -67,8 +67,7 @@ static CacheBlock link_blocks[2];
 
 class CodePageHandler : public PageHandler {
 public:
-	CodePageHandler() {
-		invalidation_map=NULL;
+  CodePageHandler() : invalidation_map(0), next(0), prev(0), old_pagehandler(0) {
 	}
 	void SetupAt(Bitu _phys_page,PageHandler * _old_pagehandler) {
 		phys_page=_phys_page;

@@ -250,7 +250,7 @@ DWORD CodecInst::CompressBegin(LPBITMAPINFOHEADER lpbiIn, LPBITMAPINFOHEADER lpb
 	CompressEnd();  // free resources if necessary
 	if (!CanCompress(lpbiIn, lpbiOut, true))
 		return ICERR_BADFORMAT;
-	codec = new VideoCodec();
+  codec = new(std::nothrow) VideoCodec();
 	if (!codec)
 		return ICERR_MEMORY;
 	if (!codec->SetupCompress( lpbiIn->biWidth, lpbiIn->biHeight))
@@ -388,7 +388,7 @@ DWORD CodecInst::DecompressBegin(LPBITMAPINFOHEADER lpbiIn, LPBITMAPINFOHEADER l
 	DecompressEnd();  // free resources if necessary
 	if (!CanDecompress(lpbiIn, lpbiOut))
 		return ICERR_BADFORMAT;
-	codec=new VideoCodec();
+  codec = new(std::nothrow) VideoCodec();
 	if (!codec)
 		return ICERR_MEMORY;
 	if (!codec->SetupDecompress( lpbiIn->biWidth, lpbiIn->biHeight))

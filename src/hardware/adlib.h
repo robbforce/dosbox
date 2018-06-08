@@ -35,13 +35,7 @@ struct Timer {
 	double delay;
 	bool enabled, overflow, masked;
 	Bit8u counter;
-	Timer() {
-		masked = false;
-		overflow = false;
-		enabled = false;
-		counter = 0;
-		delay = 0;
-	}
+  Timer() : start(0), delay(0), enabled(false), overflow(false), masked(false), counter(0) { }
 	//Call update before making any further changes
 	void Update( double time ) {
 		if ( !enabled || !delay ) 
