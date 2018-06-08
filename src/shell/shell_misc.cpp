@@ -448,7 +448,7 @@ bool DOS_Shell::Execute(const char * name, char * args) {
 	{	/* Run the .bat file */
 		/* delete old batch file if call is not active*/
 		bool temp_echo=echo; /*keep the current echostate (as delete bf might change it )*/
-		if(bf && !call) delete bf;
+    if (!call) delete bf;	//leak if call is active
 		bf=new BatchFile(this,fullname,name,line);
 		echo=temp_echo; //restore it.
 	} 

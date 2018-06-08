@@ -29,6 +29,7 @@
 
 #include <crtdbg.h>
 #include <string.h>
+#include <new>
 
 TCHAR szDescription[] = TEXT("Zipped Motion Block Video v0.1");
 TCHAR szName[]        = TEXT(CODEC_4CC);
@@ -341,8 +342,7 @@ DWORD CodecInst::Compress(ICCOMPRESS* icinfo, DWORD dwSize) {
 
 
 DWORD CodecInst::CompressEnd() {
-	if (codec) 
-		delete codec;
+	delete codec;
 	codec = 0;
 	return ICERR_OK;
 }
@@ -413,8 +413,7 @@ DWORD CodecInst::DecompressGetPalette(LPBITMAPINFOHEADER lpbiIn, LPBITMAPINFOHEA
 }
 
 DWORD CodecInst::DecompressEnd() {
-	if (codec) 
-		delete codec;
+	delete codec;
 	codec = 0;
 	return ICERR_OK;
 }

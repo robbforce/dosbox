@@ -369,6 +369,7 @@ public:
 				};
 				if (error && error!=5) {
 					delete newdrive;
+          newdrive = 0;
 					return;
 				}
 			} else {
@@ -1415,10 +1416,12 @@ public:
 		}
 
 		if (fstype=="none") {
-			if(imageDiskList[drive-'0'] != NULL) delete imageDiskList[drive-'0'];
+      delete imageDiskList[drive - '0'];
 			imageDiskList[drive-'0'] = newImage;
 			updateDPT();
 			WriteOut(MSG_Get("PROGRAM_IMGMOUNT_MOUNT_NUMBER"),drive-'0',temp_line.c_str());
+    } else {
+      delete newImage;
 		}
 
 		// check if volume label is given. becareful for cdrom

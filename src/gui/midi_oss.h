@@ -17,6 +17,9 @@
  */
 
 #include <fcntl.h>
+#include <midi.h>
+#include <cerrno>
+#include <cstring>
 #define SEQ_MIDIPUTC    5
 
 class MidiHandler_oss: public MidiHandler {
@@ -38,13 +41,18 @@ public:
 		} else device_num=0;
 		if (isOpen) return false;
 		device=open(devname, O_WRONLY, 0);
-		if (device<0) return false;
+    if (device < 0) {
+      LOG_MSG("OSS: can't open device %s (%s)", devname, std::strerror(errno));
+      return false;
+    }
+    isOpen = true;
 		return true;
 	};
 	void Close(void) {
 		if (!isOpen) return;
-		if (device>0) close(device);
-	};
+		close(device);
+    isOpen = false;
+	}
 	void PlayMsg(Bit8u * msg) {
 		Bit8u buf[128];Bitu pos=0;
 		Bitu len=MIDI_evt_len[*msg];
@@ -67,12 +75,13 @@ public:
 			buf[pos++] = device_num;
 			buf[pos++] = 0;
 		}
-		write(device,buf,pos);	
+    if (0 > write(device, buf, pos)) {
+      LOG_MSG("OSS: in %s write() returns error: %s", __func__, std::strerror(errno));
+    }
 	}
+  ~MidiHandler_oss() {
+    Close();
+  }
 };
 
 MidiHandler_oss Midi_oss;
-
-
-
-

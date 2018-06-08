@@ -798,7 +798,10 @@ bool CMscdex::GetCurrentPos(Bit8u subUnit, TMSF& pos) {
 }
 
 bool CMscdex::GetMediaStatus(Bit8u subUnit, bool& media, bool& changed, bool& trayOpen) {
-	if (subUnit>=numDrives) return false;
+  if (subUnit >= numDrives) {
+    media = changed = trayOpen = false;
+    return false;
+  }
 	dinfo[subUnit].lastResult = cdrom[subUnit]->GetMediaTrayStatus(media,changed,trayOpen);
 	return dinfo[subUnit].lastResult;
 }

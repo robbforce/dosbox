@@ -125,32 +125,29 @@ public:
 	}	
 
 	void Close(void) {
-		if (seq_handle)
-			snd_seq_close(seq_handle);
+    if (seq_handle) {
+      snd_seq_close(seq_handle);
+      seq_handle = 0;
+    }
 	}
 
 	bool Open(const char * conf) {
-		char var[10];
 		unsigned int caps;
-		bool defaultport = true; //try 17:0. Seems to be default nowadays
+    int errnum;
+    bool defaultport = true;
+    bool success = false;
 
 		// try to use port specified in config file
 		if (conf && conf[0]) { 
-			safe_strncpy(var, conf, 10);
-			if (!parse_addr(var, &seq_client, &seq_port)) {
-				LOG_MSG("ALSA:Invalid alsa port %s", var);
+      if (!parse_addr(conf, &seq_client, &seq_port)) {
+        LOG_MSG("ALSA:Invalid alsa port %s. It should be like a 65:0", conf);
 				return false;
 			}
 			defaultport = false;
 		}
-		// default port if none specified
-		else if (!parse_addr("65:0", &seq_client, &seq_port)) {
-				LOG_MSG("ALSA:Invalid alsa port 65:0");
-				return false;
-		}
-
-		if (my_snd_seq_open(&seq_handle)) {
-			LOG_MSG("ALSA:Can't open sequencer");
+    errnum = my_snd_seq_open(&seq_handle);
+    if (errnum) {
+      LOG_MSG("ALSA:Can't open sequencer: %s", snd_strerror(errnum));
 			return false;
 		}
 	
@@ -165,36 +162,28 @@ public:
       snd_seq_create_simple_port(seq_handle, "DOSBOX", caps,
       SND_SEQ_PORT_TYPE_MIDI_GENERIC | SND_SEQ_PORT_TYPE_APPLICATION);
 		if (my_port < 0) {
-			snd_seq_close(seq_handle);
-			LOG_MSG("ALSA:Can't create ALSA port");
+      LOG_MSG("ALSA:Can't create ALSA port: %s", snd_strerror(my_port));
+      Close();
 			return false;
 		}
 	
-		if (seq_client != SND_SEQ_ADDRESS_SUBSCRIBERS) {
-			/* subscribe to MIDI port */
-			if (snd_seq_connect_to(seq_handle, my_port, seq_client, seq_port) < 0) {
-				if (defaultport) { //if port "65:0" (default) try "17:0" as well
-					seq_client = 17; seq_port = 0; //Update reported values
-					if(snd_seq_connect_to(seq_handle,my_port,seq_client,seq_port) < 0) { //Try 128:0 Timidity port as well
-//						seq_client = 128; seq_port = 0; //Update reported values
-//						if(snd_seq_connect_to(seq_handle,my_port,seq_client,seq_port) < 0) {
-							snd_seq_close(seq_handle);
-							LOG_MSG("ALSA:Can't subscribe to MIDI port (65:0) nor (17:0)");
-							return false;
-//						}
-					}
-				} else {
-					snd_seq_close(seq_handle);
-					LOG_MSG("ALSA:Can't subscribe to MIDI port (%d:%d)", seq_client, seq_port);
-					return false;
-				}
-			}
-		}
+    if (defaultport) {
+      success = try_connect_to(65, 0) ||	//default
+        try_connect_to(17, 0) ||	//default as well
+        try_connect_to(128, 0);		//Timidity port
+    } else {
+      success = try_connect_to(seq_client, seq_port);
+    }
 
-		LOG_MSG("ALSA:Client initialised [%d:%d]", seq_client, seq_port);
-		return true;
+    if (success) {
+      LOG_MSG("ALSA:Client initialized (%d:%d)", seq_client, seq_port);
+    } else {
+      Close();
+    }
 	}
-
+  ~MidiHandler_alsa() {
+    Close();
+  }
 };
 
 MidiHandler_alsa Midi_alsa;

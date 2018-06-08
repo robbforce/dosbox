@@ -360,7 +360,7 @@ int VideoCodec::FinishCompressFrame( void ) {
 	zstream.next_out = (Bytef *)(compress.writeBuf + compress.writeDone);
 	zstream.avail_out = compress.writeSize - compress.writeDone;
 	zstream.total_out = 0;
-	int res = deflate(&zstream, Z_SYNC_FLUSH);
+  (void)deflate(&zstream, Z_SYNC_FLUSH);
 	return compress.writeDone + zstream.total_out;
 }
 
@@ -430,7 +430,7 @@ bool VideoCodec::DecompressFrame(void * framedata, int size) {
 	zstream.next_out = (Bytef *)work;
 	zstream.avail_out = bufsize;
 	zstream.total_out = 0;
-	int res = inflate(&zstream, Z_FINISH);
+  (void)inflate(&zstream, Z_FINISH);
 	workUsed= zstream.total_out;
 	workPos = 0;
 	if (tag & Mask_KeyFrame) {
