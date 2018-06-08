@@ -152,7 +152,7 @@ isoDrive::isoDrive(char driveLetter, const char *fileName, Bit8u mediaid, int &e
 		if (loadImage()) {
 			strcpy(info, "isoDrive ");
 			strcat(info, fileName);
-			this->driveLetter = driveLetter;
+      strncat(info, fileName, sizeof(info) / sizeof(info[0]) - 10);
 			this->mediaid = mediaid;
 			char buffer[32] = { 0 };
 			if (!MSCDEX_GetVolumeName(subUnit, buffer)) strcpy(buffer, "");
@@ -161,7 +161,7 @@ isoDrive::isoDrive(char driveLetter, const char *fileName, Bit8u mediaid, int &e
 		} else if (CDROM_Interface_Image::images[subUnit]->HasDataTrack() == false) { //Audio only cdrom
 			strcpy(info, "isoDrive ");
 			strcat(info, fileName);
-			this->driveLetter = driveLetter;
+      strncat(info, fileName, sizeof(info) / sizeof(info[0]) - 10);
 			this->mediaid = mediaid;
 			char buffer[32] = { 0 };
 			strcpy(buffer, "Audio_CD");

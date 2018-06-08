@@ -206,12 +206,7 @@ imageDisk::imageDisk(FILE *imgFile, Bit8u *imgName, Bit32u imgSizeK, bool isHard
 	diskimg = imgFile;
 	fseek(diskimg,0,SEEK_SET);
 	
-	memset(diskname,0,512);
-	if(strlen((const char *)imgName) > 511) {
-		memcpy(diskname, imgName, 511);
-	} else {
-		strcpy((char *)diskname, (const char *)imgName);
-	}
+  safe_strncpy((char *)diskname, (const char *)imgName, sizeof(diskname));
 
 	active = false;
 	hardDrive = isHardDisk;
