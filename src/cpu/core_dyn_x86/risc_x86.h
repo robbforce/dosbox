@@ -845,6 +845,7 @@ static void gen_call_function(void * func,char const* ops,...) {
 				IllegalOption("gen_call_function unknown param");
 			}
 		}
+    va_end(params);
 #if defined (MACOSX)
 		if (free_flags) release_flags=false;
 	} else {

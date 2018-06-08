@@ -54,6 +54,7 @@ void Msg(const char fmt[], ...) {
   const COORD _80x50 = {80,50};
   static BOOL startup = (AllocConsole(), SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), _80x50));
   WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), buf, lstrlen(buf), &written, 0);
+  va_end(val);
 }
 
 

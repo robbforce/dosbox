@@ -492,6 +492,7 @@ static void uprintf(char const *s, ...)
 	vsprintf(ubufp, s, arg_ptr);
 	while (*ubufp)
 		ubufp++;
+  va_end(arg_ptr);
 }
 
 static void uputchar(char c)
