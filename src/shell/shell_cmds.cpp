@@ -105,8 +105,8 @@ static char* ExpandDot(char*args, char* buffer) {
 
 bool DOS_Shell::CheckConfig(char* cmd_in,char*line) {
 	Section* test = control->GetSectionFromProperty(cmd_in);
-	if(!test) return false;
-	if(line && !line[0]) {
+  if (!test || !line) return false;
+  if (!line[0]) {
 		std::string val = test->GetPropValue(cmd_in);
 		if(val != NO_SUCH_PROPERTY) WriteOut("%s\n",val.c_str());
 		return true;

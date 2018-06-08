@@ -1105,7 +1105,7 @@ char ssdSetSize(Bitu width,Bitu height,Bitu flags,double scalex,double scaley, B
 			sdl.surface->format->Gmask,
 			sdl.surface->format->Bmask,
 			0);
-	if (!sdl.blit.surface || (!sdl.blit.surface->flags&SDL_HWSURFACE)) {
+  if (!sdl.blit.surface || (!(sdl.blit.surface->flags&SDL_HWSURFACE))) {
 		if (sdl.blit.surface) {
 			SDL_FreeSurface(sdl.blit.surface);
 			sdl.blit.surface=0;

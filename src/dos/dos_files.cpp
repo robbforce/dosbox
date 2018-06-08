@@ -78,7 +78,7 @@ bool DOS_MakeName(char const * const name,char * const fullname,Bit8u * drive) {
 		return false; 
 	}
 	r=0;w=0;
-	while (name_int[r]!=0 && (r<DOS_PATHLENGTH)) {
+  while ((r<DOS_PATHLENGTH) && name_int[r] != 0) {
 		c=name_int[r++];
 		if ((c>='a') && (c<='z')) c-=32;
 		else if (c==' ') continue; /* should be separator */
@@ -914,9 +914,9 @@ checkext:
 		string++;
 	}
 savefcb:
-	if (!hasdrive & !(parser & PARSE_DFLT_DRIVE)) fcb_name.part.drive[0] = 0;
-	if (!hasname & !(parser & PARSE_BLNK_FNAME)) strcpy(fcb_name.part.name,"        ");
-	if (!hasext & !(parser & PARSE_BLNK_FEXT)) strcpy(fcb_name.part.ext,"   ");
+	if (!hasdrive && !(parser & PARSE_DFLT_DRIVE)) fcb_name.part.drive[0] = 0;
+  if (!hasname && !(parser & PARSE_BLNK_FNAME)) strcpy(fcb_name.part.name, "        ");
+  if (!hasext && !(parser & PARSE_BLNK_FEXT)) strcpy(fcb_name.part.ext, "   ");
 	fcb.SetName(fcb_name.part.drive[0],fcb_name.part.name,fcb_name.part.ext);
 	fcb.ClearBlockRecsize(); //Undocumented bonus work.
 	*change=(Bit8u)(string-string_begin);
@@ -1220,7 +1220,7 @@ bool DOS_FCBDeleteFile(Bit16u seg,Bit16u offset){
  */
 	RealPt old_dta=dos.dta();dos.dta(dos.tables.tempdta_fcbdelete);
 	RealPt new_dta=dos.dta();
-	bool nextfile = false;
+	bool nextfile;
 	bool return_value = false;
 	nextfile = DOS_FCBFindFirst(seg,offset);
 	DOS_FCB fcb(RealSeg(new_dta),RealOff(new_dta));

@@ -578,6 +578,10 @@ static void outhex(char subtype, int extend, int optional, int defsize, int sign
   }
   for (i=0; i<n; i++)
     buff[i] = getbyte();
+  if (0 == i) {
+    buff[0] = 0;
+    i = 1;
+  }
   for (; i<extend; i++)
     buff[i] = (buff[i-1] & 0x80) ? 0xff : 0;
   if (s) {

@@ -69,6 +69,25 @@ private:
 		*client = val1; *port = val2;
 		return true;
 	}
+
+  bool try_connect_to(int try_seq_client, int try_seq_port) {
+    if (try_seq_client != SND_SEQ_ADDRESS_SUBSCRIBERS) {
+      int errnum;
+      errnum = snd_seq_connect_to(seq_handle, my_port, try_seq_client, try_seq_port);
+      if (errnum < 0) {
+        LOG_MSG("ALSA:Can't subscribe to MIDI port (%d:%d): %s", try_seq_client, try_seq_port, snd_strerror(errnum));
+        return false;
+      }
+      seq_client = try_seq_client;
+      seq_port = try_seq_port;
+    }
+    else {
+      LOG_MSG("ALSA:'snd_seq_connect_to' to MIDI port(%d:%d) didn't called as a SND_SEQ_ADDRESS_SUBSCRIBERS client",
+        try_seq_client, try_seq_port);
+      return true;	//save previous logic
+    }
+    return true;
+  }
 public:
   MidiHandler_alsa() : MidiHandler(), seq_handle(0), seq_client(0), seq_port(0), my_client(0), my_port(0) {}
 	const char* GetName(void) { return "alsa"; }
